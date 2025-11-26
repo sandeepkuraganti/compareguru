@@ -2,15 +2,73 @@
 <html>
 <head>
     <title>Mobile Comparison</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .container { display: flex; gap: 20px; flex-wrap: wrap; }
+   <style>
+        /* Import a nice Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
         .phone-card {
-            border: 1px solid #ccc;
-            padding: 15px;
-            border-radius: 10px;
-            width: 250px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            background: white;
+            width: 280px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Soft shadow for depth */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+            text-align: center;
+        }
+
+        .phone-card:hover {
+            transform: translateY(-10px); /* Lifts up when you hover! */
+        }
+
+        .phone-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .price-tag {
+            background: #e74c3c; /* Red color for bold contrast */
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .spec-item strong {
+            color: #555;
         }
     </style>
 </head>
@@ -34,11 +92,21 @@
                     
                     // 4. Fill the box with the phone's details
                     card.innerHTML = `
-                        <h2>${phone.name}</h2>
-                        <p><strong>Price:</strong> ${phone.price}</p>
-                        <p><strong>Camera:</strong> ${phone.camera}</p>
-                        <p><strong>Battery:</strong> ${phone.battery}</p>
-                        <p><strong>Performance:</strong> ${phone.performance}</p>
+                       <h2>${phone.name}</h2>
+                        <div class="price-tag">${phone.price}</div>
+                        
+                        <div class="spec-item">
+                            <strong>📷 Camera</strong>
+                            <span>${phone.camera}</span>
+                        </div>
+                        <div class="spec-item">
+                            <strong>🔋 Battery</strong>
+                            <span>${phone.battery}</span>
+                        </div>
+                        <div class="spec-item">
+                            <strong>🚀 Speed</strong>
+                            <span>${phone.performance}</span>
+                        </div>
                     `;
                     
                     // 5. Add the card to the page
