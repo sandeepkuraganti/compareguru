@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Phone Model A",
+    "price": "$799",
+    "camera": "50MP Wide",
+    "battery": "5000 mAh",
+    "performance": "Very Fast"
+  },
+  {
+    "name": "Phone Model B",
+    "price": "$699",
+    "camera": "48MP Wide",
+    "battery": "4500 mAh",
+    "performance": "Fast"
+  }
+]
