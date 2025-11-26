@@ -16,15 +16,7 @@
         }
 
         h1 {
-            <div class="compare-container">
-        <h2>Compare Mobiles</h2>
-        <div class="search-row">
-            <input type="text" placeholder="Select phone 1..." class="search-input">
-            <div class="vs-badge">VS</div>
-            <input type="text" placeholder="Select phone 2..." class="search-input">
-        </div>
-        <button class="compare-btn">Compare Now!</button>
-    </div>
+           
             text-align: center;
             color: #2c3e50;
             margin-bottom: 40px;
@@ -83,6 +75,67 @@
 </head>
 <body>
     <h1>Compare Top Mobiles 📱</h1>
+    /* Hero Comparison Box Styles */
+        .compare-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 800px; /* Keeps it from getting too wide */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-row {
+            display: flex;       /* This puts items side-by-side */
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .search-input {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            width: 40%;          /* Uses percentage so it works on mobile */
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #3498db; /* Blue glow when typing */
+        }
+
+        .vs-badge {
+            background: #2c3e50;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;  /* This makes it a perfect circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .compare-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .compare-btn:hover {
+            transform: scale(1.05); /* Grows slightly when hovered */
+        }
     
     <div class="container" id="phone-list"></div>
 
