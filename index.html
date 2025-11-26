@@ -2,9 +2,50 @@
 <html>
 <head>
     <title>Mobile Comparison</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .container { display: flex; gap: 20px; flex-wrap: wrap; }
+        .phone-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
     <h1>Compare Top Mobiles 📱</h1>
-    <p>Welcome to my comparison site.</p>
+    
+    <div class="container" id="phone-list"></div>
+
+    <script>
+        // 1. Go fetch the data file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('phone-list');
+
+                // 2. Loop through each phone in the data
+                data.forEach(phone => {
+                    // 3. Create a box (div) for the phone
+                    const card = document.createElement('div');
+                    card.className = 'phone-card';
+                    
+                    // 4. Fill the box with the phone's details
+                    card.innerHTML = `
+                        <h2>${phone.name}</h2>
+                        <p><strong>Price:</strong> ${phone.price}</p>
+                        <p><strong>Camera:</strong> ${phone.camera}</p>
+                        <p><strong>Battery:</strong> ${phone.battery}</p>
+                        <p><strong>Performance:</strong> ${phone.performance}</p>
+                    `;
+                    
+                    // 5. Add the card to the page
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error loading data:', error));
+    </script>
 </body>
 </html>
