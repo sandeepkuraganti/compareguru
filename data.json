@@ -1,16 +1,34 @@
 [
   {
-    "name": "Phone Model A",
+    "name": "Apple iPhone 15",
+    "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg",
     "price": "$799",
-    "camera": "50MP Wide",
-    "battery": "5000 mAh",
-    "performance": "Very Fast"
+    "camera": "48MP Main",
+    "battery": "3349 mAh",
+    "performance": "A16 Bionic"
   },
   {
-    "name": "Phone Model B",
+    "name": "Samsung Galaxy S24",
+    "image": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24-5g-sm-s921.jpg",
+    "price": "$799",
+    "camera": "50MP Main",
+    "battery": "4000 mAh",
+    "performance": "Snapdragon 8 Gen 3"
+  },
+  {
+    "name": "Google Pixel 8",
+    "image": "https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg",
     "price": "$699",
-    "camera": "48MP Wide",
-    "battery": "4500 mAh",
-    "performance": "Fast"
+    "camera": "50MP Octa",
+    "battery": "4575 mAh",
+    "performance": "Tensor G3"
+  },
+  {
+    "name": "OnePlus 12",
+    "image": "https://fdn2.gsmarena.com/vv/bigpic/oneplus-12.jpg",
+    "price": "$799",
+    "camera": "50MP Hasselblad",
+    "battery": "5400 mAh",
+    "performance": "Snapdragon 8 Gen 3"
   }
 ]
