@@ -3,104 +3,25 @@
 <head>
     <title>Mobile Comparison Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; background: #f0f3f7; margin: 0; padding: 40px; color: #333; }
+        h1 { text-align: center; color: #212121; margin-bottom: 30px; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f0f3f7;
-            margin: 0; padding: 40px; color: #333;
-        }
-
-        h1 { text-align: center; color: #212121; margin-bottom: 30px; font-weight: 700; }
-
-        /* --- Hero Search Section --- */
-        .compare-container {
-            background: white; padding: 30px; border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px;
-            text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;
-        }
+        .compare-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px; text-align: center; max-width: 900px; margin: 0 auto; }
         .search-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; }
-        .search-input { padding: 12px; border: 1px solid #ddd; border-radius: 4px; width: 40%; font-size: 1rem; outline: none; }
-        .vs-badge { background: #ff5a5a; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
-        .compare-btn { background: #ff5a5a; color: white; border: none; padding: 12px 40px; border-radius: 4px; font-size: 1.1rem; cursor: pointer; font-weight: 600; }
-        .compare-btn:hover { background: #e04f4f; }
-
-        /* --- Card Styles --- */
+        .search-input { padding: 12px; border: 1px solid #ddd; width: 40%; outline: none; }
+        .vs-badge { background: #ff5a5a; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .compare-btn { background: #ff5a5a; color: white; border: none; padding: 12px 40px; cursor: pointer; font-weight: 600; }
+        
         .container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .phone-card {
-            background: white; width: 280px; border-radius: 8px; padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; text-align: center;
-            border: 1px solid #eee; display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .phone-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .phone-card h2 { font-size: 1.3rem; margin: 15px 0 5px 0; color: #333; }
-        .price-tag { color: #ff5a5a; font-weight: 700; font-size: 1.2rem; margin-bottom: 15px; display: block; }
+        .phone-card { background: white; width: 280px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; border-radius: 8px; }
+        .phone-card h2 { font-size: 1.2rem; margin: 10px 0; }
+        .price-tag { color: #ff5a5a; font-weight: bold; margin-bottom: 10px; display: block; }
         
-        /* Buttons */
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        
-        .details-btn {
-            background: transparent; border: 1px solid #ff5a5a; color: #ff5a5a; padding: 8px; flex: 1;
-            border-radius: 4px; cursor: pointer; font-weight: 600; transition: 0.2s;
-        }
-        .details-btn:hover { background: #ff5a5a; color: white; }
-
-        .buy-btn {
-            background: #ff9900; border: none; color: white; padding: 8px; flex: 1;
-            border-radius: 4px; cursor: pointer; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px;
-        }
-        .buy-btn:hover { background: #e68a00; }
-
-        /* --- MODAL STYLES --- */
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6); justify-content: center; align-items: flex-start;
-            padding-top: 40px; overflow-y: auto;
-        }
-        .modal-content {
-            background-color: white; width: 90%; max-width: 800px; border-radius: 8px;
-            position: relative; animation: slideDown 0.3s ease; margin-bottom: 50px;
-        }
-        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: #888; z-index: 10; }
-
-        /* Modal Layout */
-        .modal-hero { display: flex; padding: 30px; border-bottom: 1px solid #eee; gap: 30px; align-items: flex-start; }
-        .hero-img { width: 140px; }
-        .hero-info { flex: 1; }
-        .hero-title { font-size: 1.8rem; margin: 0; color: #212121; }
-        .hero-price { color: #ff5a5a; font-size: 1.5rem; font-weight: 700; margin: 5px 0 20px 0; }
-        
-        .score-box { position: absolute; top: 30px; right: 60px; text-align: center; }
-        .score-circle {
-            width: 60px; height: 60px; background: #4caf50; color: white; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;
-        }
-        .score-label { font-size: 0.8rem; color: #666; }
-
-        .key-specs-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f9f9f9;
-            padding: 15px; border-radius: 6px; margin-top: 10px; border: 1px solid #eee;
-        }
-        .key-spec-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
-        .key-spec-item i { color: #ff5a5a; font-size: 1.2rem; width: 20px; text-align: center; }
-
-        .specs-body { padding: 0 30px 30px 30px; }
-        .spec-category { margin-top: 25px; }
-        .category-title { font-size: 1.1rem; font-weight: 600; color: #333; border-bottom: 2px solid #ff5a5a; display: inline-block; margin-bottom: 15px; padding-bottom: 5px; }
-        .spec-table { width: 100%; border-collapse: collapse; }
-        .spec-table td { padding: 10px 0; border-bottom: 1px solid #f1f1f1; font-size: 0.95rem; }
-        .spec-label { color: #777; width: 40%; font-weight: 500; }
-        .spec-value { color: #222; font-weight: 500; }
-
-        @media (max-width: 600px) {
-            .modal-hero { flex-direction: column; text-align: center; align-items: center; }
-            .score-box { position: static; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
-            .key-specs-grid { grid-template-columns: 1fr; text-align: left; }
-        }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .details-btn { border: 1px solid #ff5a5a; color: #ff5a5a; padding: 8px; flex: 1; cursor: pointer; background: transparent; }
+        .buy-btn { background: #ff9900; color: white; padding: 8px; flex: 1; cursor: pointer; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -109,173 +30,58 @@
 
     <div class="compare-container">
         <div class="search-row">
-            <input type="text" id="phone1-search" placeholder="Type a mobile name..." class="search-input" list="phone-suggestions">
+            <input type="text" id="p1" placeholder="Type Phone 1..." class="search-input" list="suggestions">
             <div class="vs-badge">VS</div>
-            <input type="text" id="phone2-search" placeholder="Type a mobile name..." class="search-input" list="phone-suggestions">
+            <input type="text" id="p2" placeholder="Type Phone 2..." class="search-input" list="suggestions">
         </div>
-        <button id="compare-btn" class="compare-btn">Compare</button>
+        <button onclick="goToCompare()" class="compare-btn">Compare</button>
     </div>
 
-    <datalist id="phone-suggestions"></datalist>
+    <datalist id="suggestions"></datalist>
     <div class="container" id="phone-list"></div>
 
-    <div id="specs-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modal-body"></div>
-        </div>
-    </div>
-
+    <script src="phones.js"></script>
+    
     <script>
-        // --- DATA ---
-        const allMobiles = [
-          {
-            "name": "Apple iPhone 15",
-            "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg",
-            "price": "₹79,900",
-            "score": "96%",
-            "amazonLink": "https://www.amazon.com/s?k=iphone+15", 
-            "highlights": { "perf": "A16 Bionic", "ram": "6 GB RAM", "cam": "48 MP Main", "bat": "3349 mAh" },
-            "specs": {
-                "General": { "Launch Date": "Sep 2023", "OS": "iOS 17" },
-                "Performance": { "Chipset": "A16 Bionic", "CPU": "Hexa-core" },
-                "Display": { "Type": "OLED", "Size": "6.1 inches" },
-                "Camera": { "Main": "48 MP + 12 MP", "Selfie": "12 MP" },
-                "Battery": { "Capacity": "3349 mAh", "Charging": "20W Wired" }
-            }
-          },
-          {
-            "name": "Samsung Galaxy S24",
-            "image": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24-5g-sm-s921.jpg",
-            "price": "₹79,999",
-            "score": "94%",
-            "amazonLink": "https://www.amazon.com/s?k=samsung+galaxy+s24",
-            "highlights": { "perf": "Snapdragon 8 Gen 3", "ram": "8 GB RAM", "cam": "50 MP Triple", "bat": "4000 mAh" },
-            "specs": {
-                "General": { "Launch Date": "Jan 2024", "OS": "Android 14" },
-                "Performance": { "Chipset": "Snapdragon 8 Gen 3", "CPU": "Octa-core" },
-                "Display": { "Type": "AMOLED 2X", "Size": "6.2 inches" },
-                "Camera": { "Main": "50 MP + 10 MP + 12 MP", "Selfie": "12 MP" },
-                "Battery": { "Capacity": "4000 mAh", "Charging": "25W Wired" }
-            }
-          },
-          {
-            "name": "OnePlus 12",
-            "image": "https://fdn2.gsmarena.com/vv/bigpic/oneplus-12.jpg",
-            "price": "₹64,999",
-            "score": "92%",
-            "amazonLink": "https://www.amazon.com/s?k=oneplus+12",
-            "highlights": { "perf": "Snapdragon 8 Gen 3", "ram": "12 GB RAM", "cam": "50 MP Hasselblad", "bat": "5400 mAh" },
-            "specs": {
-                "General": { "Launch Date": "Dec 2023", "OS": "Android 14" },
-                "Performance": { "Chipset": "Snapdragon 8 Gen 3", "CPU": "Octa-core" },
-                "Display": { "Type": "AMOLED", "Size": "6.82 inches" },
-                "Camera": { "Main": "50 MP + 64 MP + 48 MP", "Selfie": "32 MP" },
-                "Battery": { "Capacity": "5400 mAh", "Charging": "100W Wired" }
-            }
-          }
-        ];
-
-        // --- STARTUP ---
-        // Ensure DOM is fully loaded before running script
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCards(allMobiles);
-            populateSuggestions(allMobiles);
+        // Populate Datalist
+        const datalist = document.getElementById('suggestions');
+        allMobiles.forEach(p => {
+            let opt = document.createElement('option');
+            opt.value = p.name;
+            datalist.appendChild(opt);
         });
 
-        function populateSuggestions(phones) {
-            const datalist = document.getElementById('phone-suggestions');
-            if(!datalist) return;
-            datalist.innerHTML = ''; 
-            phones.forEach(phone => {
-                const option = document.createElement('option');
-                option.value = phone.name;
-                datalist.appendChild(option);
-            });
-        }
-
-        function renderCards(phones) {
-            const container = document.getElementById('phone-list');
-            if(!container) return;
-            container.innerHTML = ''; 
-            
-            if (phones.length === 0) { container.innerHTML = '<p>No phones found!</p>'; return; }
-
-            phones.forEach(phone => {
-                const card = document.createElement('div');
-                card.className = 'phone-card';
-                card.innerHTML = `
-                    <img src="${phone.image}" alt="${phone.name}" style="width: 140px; height: auto; margin-bottom: 10px; margin-left:auto; margin-right:auto;">
-                    <h2>${phone.name}</h2>
-                    <div class="price-tag">${phone.price}</div>
-                    
-                    <div class="btn-group">
-                        <button class="details-btn" onclick="openModal('${phone.name}')">Specs</button>
-                        <a href="${phone.amazonLink}" target="_blank" class="buy-btn">
-                            Buy <i class="fab fa-amazon"></i>
-                        </a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function openModal(phoneName) {
-            const phone = allMobiles.find(p => p.name === phoneName);
-            const modalBody = document.getElementById('modal-body');
-            const modal = document.getElementById('specs-modal');
-
-            let html = `
-                <div class="modal-hero">
-                    <img src="${phone.image}" class="hero-img">
-                    <div class="hero-info">
-                        <h2 class="hero-title">${phone.name}</h2>
-                        <div class="hero-price">${phone.price}</div>
-                        
-                        <div class="key-specs-grid">
-                            <div class="key-spec-item"><i class="fas fa-microchip"></i> ${phone.highlights.perf}</div>
-                            <div class="key-spec-item"><i class="fas fa-memory"></i> ${phone.highlights.ram}</div>
-                            <div class="key-spec-item"><i class="fas fa-camera"></i> ${phone.highlights.cam}</div>
-                            <div class="key-spec-item"><i class="fas fa-battery-full"></i> ${phone.highlights.bat}</div>
-                        </div>
-                    </div>
-                    <div class="score-box">
-                        <div class="score-circle">${phone.score}</div>
-                        <span class="score-label">Spec Score</span>
-                    </div>
+        // Render Cards
+        const container = document.getElementById('phone-list');
+        allMobiles.forEach(phone => {
+            const card = document.createElement('div');
+            card.className = 'phone-card';
+            card.innerHTML = `
+                <img src="${phone.image}" style="width:120px;">
+                <h2>${phone.name}</h2>
+                <div class="price-tag">${phone.price}</div>
+                <div class="btn-group">
+                    <a href="specs.html?id=${phone.id}" class="details-btn">View Specs</a>
+                    <a href="${phone.amazonLink}" target="_blank" class="buy-btn">Buy Now</a>
                 </div>
-                <div class="specs-body">
             `;
+            container.appendChild(card);
+        });
 
-            for (const [category, details] of Object.entries(phone.specs)) {
-                html += `<div class="spec-category"><div class="category-title">${category}</div><table class="spec-table">`;
-                for (const [key, value] of Object.entries(details)) {
-                    html += `<tr><td class="spec-label">${key}</td><td class="spec-value">${value}</td></tr>`;
-                }
-                html += `</table></div>`;
+        // Compare Function
+        function goToCompare() {
+            const name1 = document.getElementById('p1').value;
+            const name2 = document.getElementById('p2').value;
+            
+            // Find IDs based on names
+            const phone1 = allMobiles.find(p => p.name === name1);
+            const phone2 = allMobiles.find(p => p.name === name2);
+
+            if (phone1 && phone2) {
+                window.location.href = `compare.html?p1=${phone1.id}&p2=${phone2.id}`;
+            } else {
+                alert("Please select valid phones from the list!");
             }
-            html += `</div>`;
-            modalBody.innerHTML = html;
-            modal.style.display = "flex";
-        }
-
-        function closeModal() { document.getElementById('specs-modal').style.display = "none"; }
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('specs-modal')) closeModal();
-        }
-
-        const compareBtn = document.getElementById('compare-btn');
-        if(compareBtn) {
-            compareBtn.addEventListener('click', () => {
-                const search1 = document.getElementById('phone1-search').value.toLowerCase();
-                const search2 = document.getElementById('phone2-search').value.toLowerCase();
-                const filteredPhones = allMobiles.filter(phone => {
-                    const name = phone.name.toLowerCase();
-                    if (!search1 && !search2) return true;
-                    return (search1 && name.includes(search1)) || (search2 && name.includes(search2));
-                });
-                renderCards(filteredPhones);
-            });
         }
     </script>
 </body>
