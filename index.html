@@ -154,24 +154,41 @@
     <div class="container" id="phone-list"></div>
 
     <script>
+        // ALERT 1: If you see this, the HTML is correct and script started
+        alert("Check 1: Script is running!");
+
         let allMobiles = []; 
 
         fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                allMobiles = data; 
-                renderCards(allMobiles); // Show cards
-                populateSuggestions(allMobiles); // NEW: Create the dropdown list
+            .then(response => {
+                // ALERT 2: If you see this, we found the file!
+                // If not, we have a network/file name issue.
+                if (!response.ok) {
+                    alert("Check 2 ERROR: File not found (404)");
+                    throw new Error("HTTP error " + response.status);
+                }
+                return response.json();
             })
-            .catch(error => console.error('Error loading data:', error));
+            .then(data => {
+                // ALERT 3: If you see this, the data is loaded successfully!
+                alert("Check 3: Data loaded! Found " + data.length + " phones.");
+                
+                allMobiles = data; 
+                renderCards(allMobiles); 
+                populateSuggestions(allMobiles);
+            })
+            .catch(error => {
+                // ALERT 4: If you see this, something crashed.
+                alert("CRASH: " + error);
+                console.error('Error loading data:', error);
+            });
 
-        // Function to create the dropdown options
         function populateSuggestions(phones) {
             const datalist = document.getElementById('phone-suggestions');
-            datalist.innerHTML = ''; // clear any old data
+            datalist.innerHTML = ''; 
             phones.forEach(phone => {
                 const option = document.createElement('option');
-                option.value = phone.name; // Add phone name to the list
+                option.value = phone.name;
                 datalist.appendChild(option);
             });
         }
@@ -190,3 +207,41 @@
                 card.className = 'phone-card';
                 card.innerHTML = `
                     <img src="${phone.image}" alt="${phone.name}" style="width: 160px; height: auto; margin-bottom: 15px;">
+                    <h2>${phone.name}</h2>
+                    <div class="price-tag">${phone.price}</div>
+                    
+                    <div class="spec-item">
+                        <strong>📷 Camera</strong>
+                        <span>${phone.camera}</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>🔋 Battery</strong>
+                        <span>${phone.battery}</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>🚀 Speed</strong>
+                        <span>${phone.performance}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('compare-btn').addEventListener('click', () => {
+            const search1 = document.getElementById('phone1-search').value.toLowerCase();
+            const search2 = document.getElementById('phone2-search').value.toLowerCase();
+
+            const filteredPhones = allMobiles.filter(phone => {
+                const name = phone.name.toLowerCase();
+                const matches1 = search1 ? name.includes(search1) : false;
+                const matches2 = search2 ? name.includes(search2) : false;
+                
+                if (!search1 && !search2) return true;
+                return matches1 || matches2;
+            });
+
+            renderCards(filteredPhones);
+        });
+    </script>
+</body>
+</html>
