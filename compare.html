@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compare Mobiles</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; padding: 20px; background: #f0f3f7; }
+        .back-btn { text-decoration: none; color: #333; margin-bottom: 20px; display: inline-block; font-weight: bold;}
+        
+        .compare-table { width: 100%; max-width: 900px; margin: 0 auto; background: white; border-collapse: collapse; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        .compare-table th, .compare-table td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; width: 33%; }
+        .compare-table th { background: #f8f9fa; text-align: left; color: #555; width: 20%; font-weight: 600; }
+        
+        .img-preview { width: 120px; height: auto; }
+        .price { color: #ff5a5a; font-weight: bold; font-size: 1.2rem; }
+        .section-header { background: #ff5a5a; color: white; text-align: center; font-weight: bold; text-transform: uppercase; padding: 10px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Search</a>
+    
+    <table class="compare-table" id="compare-table"></table>
+
+    <script src="phone.js"></script>
+    <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const p1Id = params.get('p1');
+            const p2Id = params.get('p2');
+
+            const p1 = allMobiles.find(p => p.id === p1Id);
+            const p2 = allMobiles.find(p => p.id === p2Id);
+
+            if (p1 && p2) {
+                const table = document.getElementById('compare-table');
+                let html = `
+                    <tr>
+                        <th></th>
+                        <td><img src="${p1.image}" class="img-preview"><h3>${p1.name}</h3><div class="price">${p1.price}</div></td>
+                        <td><img src="${p2.image}" class="img-preview"><h3>${p2.name}</h3><div class="price">${p2.price}</div></td>
+                    </tr>
+                `;
+
+                for (const category of Object.keys(p1.specs)) {
+                    html += `<tr><td colspan="3" class="section-header">${category}</td></tr>`;
+                    for (const key of Object.keys(p1.specs[category])) {
+                        html += `
+                            <tr>
+                                <th>${key}</th>
+                                <td>${p1.specs[category][key]}</td>
+                                <td>${p2.specs[category][key]}</td>
+                            </tr>
+                        `;
+                    }
+                }
+                table.innerHTML = html;
+            } else {
+                document.body.innerHTML = "<h1>Select two phones to compare!</h1>";
+            }
+        };
+    </script>
+</body>
+</html>
