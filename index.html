@@ -20,7 +20,7 @@
         .price-tag { color: #ff5a5a; font-weight: bold; margin-bottom: 10px; display: block; }
         
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .details-btn { border: 1px solid #ff5a5a; color: #ff5a5a; padding: 8px; flex: 1; cursor: pointer; background: transparent; }
+        .details-btn { border: 1px solid #ff5a5a; color: #ff5a5a; padding: 8px; flex: 1; cursor: pointer; background: transparent; text-decoration: none; }
         .buy-btn { background: #ff9900; color: white; padding: 8px; flex: 1; cursor: pointer; text-decoration: none; }
     </style>
 </head>
@@ -40,40 +40,47 @@
     <datalist id="suggestions"></datalist>
     <div class="container" id="phone-list"></div>
 
-    <script src="phones.js"></script>
+    <script src="phone.js"></script>
     
     <script>
-        // Populate Datalist
-        const datalist = document.getElementById('suggestions');
-        allMobiles.forEach(p => {
-            let opt = document.createElement('option');
-            opt.value = p.name;
-            datalist.appendChild(opt);
-        });
+        // Wait for phone.js to load
+        window.onload = function() {
+            if (typeof allMobiles === 'undefined') {
+                alert("Error: phone.js didn't load! Check the file name.");
+                return;
+            }
 
-        // Render Cards
-        const container = document.getElementById('phone-list');
-        allMobiles.forEach(phone => {
-            const card = document.createElement('div');
-            card.className = 'phone-card';
-            card.innerHTML = `
-                <img src="${phone.image}" style="width:120px;">
-                <h2>${phone.name}</h2>
-                <div class="price-tag">${phone.price}</div>
-                <div class="btn-group">
-                    <a href="specs.html?id=${phone.id}" class="details-btn">View Specs</a>
-                    <a href="${phone.amazonLink}" target="_blank" class="buy-btn">Buy Now</a>
-                </div>
-            `;
-            container.appendChild(card);
-        });
+            // Populate Datalist
+            const datalist = document.getElementById('suggestions');
+            allMobiles.forEach(p => {
+                let opt = document.createElement('option');
+                opt.value = p.name;
+                datalist.appendChild(opt);
+            });
+
+            // Render Cards
+            const container = document.getElementById('phone-list');
+            allMobiles.forEach(phone => {
+                const card = document.createElement('div');
+                card.className = 'phone-card';
+                card.innerHTML = `
+                    <img src="${phone.image}" style="width:120px;">
+                    <h2>${phone.name}</h2>
+                    <div class="price-tag">${phone.price}</div>
+                    <div class="btn-group">
+                        <a href="specs.html?id=${phone.id}" class="details-btn">View Specs</a>
+                        <a href="${phone.amazonLink}" target="_blank" class="buy-btn">Buy Now</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
 
         // Compare Function
         function goToCompare() {
             const name1 = document.getElementById('p1').value;
             const name2 = document.getElementById('p2').value;
             
-            // Find IDs based on names
             const phone1 = allMobiles.find(p => p.name === name1);
             const phone2 = allMobiles.find(p => p.name === name2);
 
