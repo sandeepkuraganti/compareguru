@@ -154,35 +154,48 @@
     <div class="container" id="phone-list"></div>
 
     <script>
-        // ALERT 1: If you see this, the HTML is correct and script started
-        alert("Check 1: Script is running!");
+        // --- DATA ---
+        const allMobiles = [
+          {
+            "name": "Apple iPhone 15",
+            "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg",
+            "price": "$799",
+            "camera": "48MP Main",
+            "battery": "3349 mAh",
+            "performance": "A16 Bionic"
+          },
+          {
+            "name": "Samsung Galaxy S24",
+            "image": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24-5g-sm-s921.jpg",
+            "price": "$799",
+            "camera": "50MP Main",
+            "battery": "4000 mAh",
+            "performance": "Snapdragon 8 Gen 3"
+          },
+          {
+            "name": "Google Pixel 8",
+            "image": "https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg",
+            "price": "$699",
+            "camera": "50MP Octa",
+            "battery": "4575 mAh",
+            "performance": "Tensor G3"
+          },
+          {
+            "name": "OnePlus 12",
+            "image": "https://fdn2.gsmarena.com/vv/bigpic/oneplus-12.jpg",
+            "price": "$799",
+            "camera": "50MP Hasselblad",
+            "battery": "5400 mAh",
+            "performance": "Snapdragon 8 Gen 3"
+          }
+        ];
 
-        let allMobiles = []; 
+        // --- Start the App ---
+        renderCards(allMobiles);
+        populateSuggestions(allMobiles);
 
-        fetch('data.json')
-            .then(response => {
-                // ALERT 2: If you see this, we found the file!
-                // If not, we have a network/file name issue.
-                if (!response.ok) {
-                    alert("Check 2 ERROR: File not found (404)");
-                    throw new Error("HTTP error " + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // ALERT 3: If you see this, the data is loaded successfully!
-                alert("Check 3: Data loaded! Found " + data.length + " phones.");
-                
-                allMobiles = data; 
-                renderCards(allMobiles); 
-                populateSuggestions(allMobiles);
-            })
-            .catch(error => {
-                // ALERT 4: If you see this, something crashed.
-                alert("CRASH: " + error);
-                console.error('Error loading data:', error);
-            });
 
+        // --- Helper Functions ---
         function populateSuggestions(phones) {
             const datalist = document.getElementById('phone-suggestions');
             datalist.innerHTML = ''; 
@@ -244,4 +257,3 @@
         });
     </script>
 </body>
-</html>
