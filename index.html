@@ -142,31 +142,43 @@
     <div class="compare-container">
         <h2>Compare Mobiles</h2>
         <div class="search-row">
-            <input type="text" id="phone1-search" placeholder="Select phone 1..." class="search-input">
+            <input type="text" id="phone1-search" placeholder="Select phone 1..." class="search-input" list="phone-suggestions">
             <div class="vs-badge">VS</div>
-            <input type="text" id="phone2-search" placeholder="Select phone 2..." class="search-input">
+            <input type="text" id="phone2-search" placeholder="Select phone 2..." class="search-input" list="phone-suggestions">
         </div>
         <button id="compare-btn" class="compare-btn">Compare Now!</button>
     </div>
 
+    <datalist id="phone-suggestions"></datalist>
+
     <div class="container" id="phone-list"></div>
 
     <script>
-        let allMobiles = []; // We will store all the downloaded data here
+        let allMobiles = []; 
 
-        // 1. Fetch data when the page loads
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
-                allMobiles = data; // Save the data to our variable
-                renderCards(allMobiles); // Show all phones initially
+                allMobiles = data; 
+                renderCards(allMobiles); // Show cards
+                populateSuggestions(allMobiles); // NEW: Create the dropdown list
             })
             .catch(error => console.error('Error loading data:', error));
 
-        // 2. Function to display a list of phones
+        // Function to create the dropdown options
+        function populateSuggestions(phones) {
+            const datalist = document.getElementById('phone-suggestions');
+            datalist.innerHTML = ''; // clear any old data
+            phones.forEach(phone => {
+                const option = document.createElement('option');
+                option.value = phone.name; // Add phone name to the list
+                datalist.appendChild(option);
+            });
+        }
+
         function renderCards(phones) {
             const container = document.getElementById('phone-list');
-            container.innerHTML = ''; // Clear the screen first
+            container.innerHTML = ''; 
 
             if (phones.length === 0) {
                 container.innerHTML = '<p>No phones found!</p>';
@@ -177,48 +189,4 @@
                 const card = document.createElement('div');
                 card.className = 'phone-card';
                 card.innerHTML = `
-                 card.innerHTML = `
                     <img src="${phone.image}" alt="${phone.name}" style="width: 160px; height: auto; margin-bottom: 15px;">
-                    <h2>${phone.name}</h2>
-                    <div class="price-tag">${phone.price}</div>
-                    
-                    <div class="spec-item">
-                        <strong>📷 Camera</strong>
-                        <span>${phone.camera}</span>
-                    </div>
-                    <div class="spec-item">
-                        <strong>🔋 Battery</strong>
-                        <span>${phone.battery}</span>
-                    </div>
-                    <div class="spec-item">
-                        <strong>🚀 Speed</strong>
-                        <span>${phone.performance}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // 3. Listen for the "Compare" button click
-        document.getElementById('compare-btn').addEventListener('click', () => {
-            // Get what the user typed (convert to lowercase to make matching easier)
-            const search1 = document.getElementById('phone1-search').value.toLowerCase();
-            const search2 = document.getElementById('phone2-search').value.toLowerCase();
-
-            // Filter the list: Keep phone if it matches Search 1 OR Search 2
-            const filteredPhones = allMobiles.filter(phone => {
-                const name = phone.name.toLowerCase();
-                // If search is empty, don't filter it out, otherwise check if name matches
-                const matches1 = search1 ? name.includes(search1) : false;
-                const matches2 = search2 ? name.includes(search2) : false;
-                
-                // Show phone if it matches either search, or if both boxes are empty (show all)
-                if (!search1 && !search2) return true;
-                return matches1 || matches2;
-            });
-
-            renderCards(filteredPhones);
-        });
-    </script>
-</body>
-</html>
