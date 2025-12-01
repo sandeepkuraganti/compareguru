@@ -7,25 +7,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Poppins', sans-serif; background: #f0f3f7; margin: 0; padding: 40px; color: #333; position: relative; }
         
-        /* Header Layout */
         h1 { text-align: center; color: #212121; margin-bottom: 50px; margin-top: 10px; }
 
-        /* NEW: Search Bar Top Right */
-        .filter-container { 
-            position: absolute; 
-            top: 40px; 
-            right: 40px; 
-            width: 300px; /* Compact width */
-            z-index: 100;
-        }
-        .filter-input { 
-            width: 100%; padding: 10px 15px; font-size: 0.95rem; border: 2px solid #ddd; 
-            border-radius: 50px; outline: none; box-sizing: border-box; transition: 0.3s;
-            background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            padding-right: 40px; /* Space for icon */
-        }
-        .filter-input:focus { border-color: #3498db; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2); }
-        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 0.9rem;}
+        /* Top Right Search */
+        .filter-container { position: absolute; top: 40px; right: 40px; width: 300px; z-index: 100; }
+        .filter-input { width: 100%; padding: 10px 15px; font-size: 0.95rem; border: 2px solid #ddd; border-radius: 50px; outline: none; padding-right: 40px; }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; }
 
         /* Compare Section */
         .compare-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px; text-align: center; max-width: 900px; margin: 0 auto; }
@@ -37,10 +24,108 @@
         /* Phone Cards */
         .container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .phone-card { background: white; width: 280px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; border-radius: 8px; transition: 0.3s; }
-        .phone-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .phone-card:hover { transform: translateY(-5px); }
         .phone-card h2 { font-size: 1.2rem; margin: 10px 0; }
         .price-tag { color: #ff5a5a; font-weight: bold; margin-bottom: 10px; display: block; }
         
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .details-btn { border: 1px solid #ff5a5a; color: #ff5a5a; padding: 8px; flex: 1; cursor: pointer; background: transparent; text-decoration: none; border-radius: 4px; }
-        .buy-btn { background: #ff9900; color: white; padding: 8px; flex: 1; cursor: pointer; text-decoration: none
+        .buy-btn { background: #ff9900; color: white; padding: 8px; flex: 1; cursor: pointer; text-decoration: none; border-radius: 4px; }
+
+        @media (max-width: 768px) {
+            .filter-container { position: static; margin: 0 auto 20px auto; width: 100%; max-width: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filter-container">
+        <input type="text" id="filter-box" class="filter-input" placeholder="Quick Search...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <h1>Compare Top Mobiles 📱</h1>
+
+    <div class="compare-container">
+        <h3>Compare Two Phones</h3>
+        <div class="search-row">
+            <input type="text" id="p1" placeholder="Type Phone 1..." class="search-input" list="suggestions">
+            <div class="vs-badge">VS</div>
+            <input type="text" id="p2" placeholder="Type Phone 2..." class="search-input" list="suggestions">
+        </div>
+        <button onclick="goToCompare()" class="compare-btn">Compare</button>
+    </div>
+
+    <datalist id="suggestions"></datalist>
+
+    <div class="container" id="phone-list"></div>
+
+    <script src="phone.js"></script>
+    
+    <script>
+        window.onload = function() {
+            // Check if phone.js loaded
+            if (typeof allMobiles === 'undefined') {
+                document.getElementById('phone-list').innerHTML = "<h2 style='color:red; text-align:center;'>Error: phone.js not loaded. Check file name!</h2>";
+                return;
+            }
+
+            const datalist = document.getElementById('suggestions');
+            allMobiles.forEach(p => {
+                let opt = document.createElement('option');
+                opt.value = p.name;
+                datalist.appendChild(opt);
+            });
+
+            renderCards(allMobiles);
+
+            document.getElementById('filter-box').addEventListener('keyup', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredPhones = allMobiles.filter(phone => 
+                    phone.name.toLowerCase().includes(searchTerm)
+                );
+                renderCards(filteredPhones);
+            });
+        };
+
+        function renderCards(phones) {
+            const container = document.getElementById('phone-list');
+            container.innerHTML = ""; 
+
+            if (phones.length === 0) {
+                container.innerHTML = "<h3 style='color:#777;'>No mobiles found.</h3>";
+                return;
+            }
+
+            phones.forEach(phone => {
+                const card = document.createElement('div');
+                card.className = 'phone-card';
+                card.innerHTML = `
+                    <img src="${phone.image}" style="width:120px; height:auto; margin:0 auto; display:block;">
+                    <h2>${phone.name}</h2>
+                    <div class="price-tag">${phone.price}</div>
+                    <div class="btn-group">
+                        <a href="specs.html?id=${phone.id}" class="details-btn">View Specs</a>
+                        <a href="${phone.amazonLink}" target="_blank" class="buy-btn">Buy Now</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function goToCompare() {
+            const name1 = document.getElementById('p1').value;
+            const name2 = document.getElementById('p2').value;
+            
+            const phone1 = allMobiles.find(p => p.name === name1);
+            const phone2 = allMobiles.find(p => p.name === name2);
+
+            if (phone1 && phone2) {
+                window.location.href = `compare.html?p1=${phone1.id}&p2=${phone2.id}`;
+            } else {
+                alert("Please select valid phones from the list!");
+            }
+        }
+    </script>
+</body>
+</html>
