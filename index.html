@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mobile Comparison</title>
+    <title>Mobile Comparison Pro</title>
     <style>
-        /* Import a nice Google Font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
         body {
@@ -15,14 +14,9 @@
             color: #333;
         }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-size: 2.5rem;
-        }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 40px; font-size: 2.5rem; }
 
-        /* --- Hero Comparison Box Styles --- */
+        /* --- Hero Section --- */
         .compare-container {
             background: white;
             padding: 30px;
@@ -34,105 +28,57 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .search-row { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 20px 0; }
+        .search-input { padding: 12px; border: 2px solid #eee; border-radius: 8px; width: 40%; font-size: 1rem; outline: none; }
+        .search-input:focus { border-color: #3498db; }
+        .vs-badge { background: #2c3e50; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .compare-btn { background: #e74c3c; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; }
+        .compare-btn:hover { transform: scale(1.05); }
 
-        .search-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .search-input {
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            width: 40%;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: #3498db;
-        }
-
-        .vs-badge {
-            background: #2c3e50;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .compare-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .compare-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- Phone Card Styles --- */
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
+        /* --- Card Styles --- */
+        .container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
         .phone-card {
-            background: white;
-            width: 280px;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            text-align: center;
+            background: white; width: 300px; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s ease; text-align: center;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
+        .phone-card:hover { transform: translateY(-10px); }
+        .phone-card h2 { font-size: 1.5rem; margin: 10px 0; color: #333; }
+        .price-tag { background: #e74c3c; color: white; padding: 5px 15px; border-radius: 50px; font-weight: 600; display: inline-block; margin-bottom: 15px; }
+        .spec-preview { text-align: left; margin-bottom: 15px; }
+        .spec-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 0.9rem; }
+        
+        /* New "View Full Specs" Button */
+        .details-btn {
+            background: #3498db; color: white; border: none; padding: 10px; width: 100%;
+            border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 10px;
+        }
+        .details-btn:hover { background: #2980b9; }
 
-        .phone-card:hover {
-            transform: translateY(-10px);
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            justify-content: center; align-items: center;
         }
-
-        .phone-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #333;
+        .modal-content {
+            background-color: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 600px;
+            max-height: 80vh; overflow-y: auto; position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
         }
-
-        .price-tag {
-            background: #e74c3c;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 20px;
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa;
         }
-
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-            font-size: 0.9rem;
-        }
-
-        .spec-item strong {
-            color: #555;
-        }
+        .close-btn:hover { color: black; }
+        
+        /* Modal Table Styles */
+        .specs-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .specs-table th, .specs-table td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+        .specs-table th { background-color: #f8f9fa; color: #2c3e50; width: 35%; }
+        .specs-table td { color: #555; }
+        .modal-header { text-align: center; }
+        .modal-header img { width: 120px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -150,55 +96,97 @@
     </div>
 
     <datalist id="phone-suggestions"></datalist>
-
     <div class="container" id="phone-list"></div>
 
+    <div id="specs-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
+
     <script>
-        // --- DATA ---
+        // --- 1. THE MASSIVE DATASET (Simulating a real DB) ---
         const allMobiles = [
           {
             "name": "Apple iPhone 15",
             "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg",
             "price": "$799",
-            "camera": "48MP Main",
-            "battery": "3349 mAh",
-            "performance": "A16 Bionic"
+            "specs": {
+                "Display": "6.1 inches, Super Retina XDR OLED",
+                "Processor": "Apple A16 Bionic (4 nm)",
+                "RAM": "6 GB",
+                "Storage": "128GB / 256GB / 512GB",
+                "Main Camera": "48 MP (wide) + 12 MP (ultrawide)",
+                "Selfie Camera": "12 MP, f/1.9",
+                "Battery": "3349 mAh, Wired charging",
+                "OS": "iOS 17, upgradable to iOS 17.1.1",
+                "Weight": "171 g (6.03 oz)",
+                "Build": "Glass front/back, aluminum frame"
+            }
           },
           {
             "name": "Samsung Galaxy S24",
             "image": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24-5g-sm-s921.jpg",
             "price": "$799",
-            "camera": "50MP Main",
-            "battery": "4000 mAh",
-            "performance": "Snapdragon 8 Gen 3"
+            "specs": {
+                "Display": "6.2 inches, Dynamic LTPO AMOLED 2X",
+                "Processor": "Snapdragon 8 Gen 3 / Exynos 2400",
+                "RAM": "8 GB",
+                "Storage": "128GB / 256GB / 512GB",
+                "Main Camera": "50 MP + 10 MP (tele) + 12 MP (ultra)",
+                "Selfie Camera": "12 MP, f/2.2",
+                "Battery": "4000 mAh, 25W wired",
+                "OS": "Android 14, One UI 6.1",
+                "Weight": "167 g (5.89 oz)",
+                "Build": "Glass front/back, aluminum frame"
+            }
           },
           {
             "name": "Google Pixel 8",
             "image": "https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg",
             "price": "$699",
-            "camera": "50MP Octa",
-            "battery": "4575 mAh",
-            "performance": "Tensor G3"
+            "specs": {
+                "Display": "6.2 inches, OLED, 120Hz, HDR10+",
+                "Processor": "Google Tensor G3 (4 nm)",
+                "RAM": "8 GB",
+                "Storage": "128GB / 256GB",
+                "Main Camera": "50 MP (wide) + 12 MP (ultrawide)",
+                "Selfie Camera": "10.5 MP, f/2.2",
+                "Battery": "4575 mAh, 27W wired",
+                "OS": "Android 14",
+                "Weight": "187 g (6.60 oz)",
+                "Build": "Glass front/back, aluminum frame"
+            }
           },
           {
             "name": "OnePlus 12",
             "image": "https://fdn2.gsmarena.com/vv/bigpic/oneplus-12.jpg",
             "price": "$799",
-            "camera": "50MP Hasselblad",
-            "battery": "5400 mAh",
-            "performance": "Snapdragon 8 Gen 3"
+            "specs": {
+                "Display": "6.82 inches, LTPO AMOLED, 120Hz",
+                "Processor": "Snapdragon 8 Gen 3 (4 nm)",
+                "RAM": "12 GB / 16 GB / 24 GB",
+                "Storage": "256GB / 512GB / 1TB",
+                "Main Camera": "50 MP + 64 MP (periscope) + 48 MP",
+                "Selfie Camera": "32 MP, f/2.4",
+                "Battery": "5400 mAh, 100W wired",
+                "OS": "Android 14, OxygenOS 14",
+                "Weight": "220 g (7.76 oz)",
+                "Build": "Glass front/back, aluminum frame"
+            }
           }
         ];
 
-        // --- Start the App ---
+        // --- 2. STARTUP LOGIC ---
         renderCards(allMobiles);
         populateSuggestions(allMobiles);
 
-
-        // --- Helper Functions ---
+        // --- 3. HELPER FUNCTIONS ---
         function populateSuggestions(phones) {
             const datalist = document.getElementById('phone-suggestions');
-            datalist.innerHTML = ''; 
+            datalist.innerHTML = '';
             phones.forEach(phone => {
                 const option = document.createElement('option');
                 option.value = phone.name;
@@ -208,38 +196,79 @@
 
         function renderCards(phones) {
             const container = document.getElementById('phone-list');
-            container.innerHTML = ''; 
+            container.innerHTML = '';
 
             if (phones.length === 0) {
                 container.innerHTML = '<p>No phones found!</p>';
                 return;
             }
 
-            phones.forEach(phone => {
+            phones.forEach((phone, index) => {
                 const card = document.createElement('div');
                 card.className = 'phone-card';
+                // We store the index so we can look up full specs later
                 card.innerHTML = `
-                    <img src="${phone.image}" alt="${phone.name}" style="width: 160px; height: auto; margin-bottom: 15px;">
-                    <h2>${phone.name}</h2>
-                    <div class="price-tag">${phone.price}</div>
-                    
-                    <div class="spec-item">
-                        <strong>📷 Camera</strong>
-                        <span>${phone.camera}</span>
+                    <div>
+                        <img src="${phone.image}" alt="${phone.name}" style="width: 140px; height: auto; margin-bottom: 10px;">
+                        <h2>${phone.name}</h2>
+                        <div class="price-tag">${phone.price}</div>
+                        
+                        <div class="spec-preview">
+                            <div class="spec-item"><strong>📷 Cam:</strong> <span>${phone.specs["Main Camera"].split('+')[0]}</span></div>
+                            <div class="spec-item"><strong>🔋 Bat:</strong> <span>${phone.specs["Battery"].split(',')[0]}</span></div>
+                            <div class="spec-item"><strong>🚀 Chip:</strong> <span>${phone.specs["Processor"].split('(')[0]}</span></div>
+                        </div>
                     </div>
-                    <div class="spec-item">
-                        <strong>🔋 Battery</strong>
-                        <span>${phone.battery}</span>
-                    </div>
-                    <div class="spec-item">
-                        <strong>🚀 Speed</strong>
-                        <span>${phone.performance}</span>
-                    </div>
+                    <button class="details-btn" onclick="openModal('${phone.name}')">View Full Specs</button>
                 `;
                 container.appendChild(card);
             });
         }
 
+        // --- 4. MODAL LOGIC (The "View Details" Feature) ---
+        function openModal(phoneName) {
+            const phone = allMobiles.find(p => p.name === phoneName);
+            const modalBody = document.getElementById('modal-body');
+            const modal = document.getElementById('specs-modal');
+
+            // Build the table dynamically
+            let tableHTML = `
+                <div class="modal-header">
+                    <img src="${phone.image}" alt="${phone.name}">
+                    <h2>${phone.name}</h2>
+                    <div class="price-tag">${phone.price}</div>
+                </div>
+                <table class="specs-table">
+            `;
+
+            // Loop through every spec in the object
+            for (const [key, value] of Object.entries(phone.specs)) {
+                tableHTML += `
+                    <tr>
+                        <th>${key}</th>
+                        <td>${value}</td>
+                    </tr>
+                `;
+            }
+            tableHTML += `</table>`;
+
+            modalBody.innerHTML = tableHTML;
+            modal.style.display = "flex"; // Show modal
+        }
+
+        function closeModal() {
+            document.getElementById('specs-modal').style.display = "none";
+        }
+
+        // Close modal if user clicks outside the white box
+        window.onclick = function(event) {
+            const modal = document.getElementById('specs-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // --- 5. SEARCH LOGIC ---
         document.getElementById('compare-btn').addEventListener('click', () => {
             const search1 = document.getElementById('phone1-search').value.toLowerCase();
             const search2 = document.getElementById('phone2-search').value.toLowerCase();
@@ -248,12 +277,11 @@
                 const name = phone.name.toLowerCase();
                 const matches1 = search1 ? name.includes(search1) : false;
                 const matches2 = search2 ? name.includes(search2) : false;
-                
                 if (!search1 && !search2) return true;
                 return matches1 || matches2;
             });
-
             renderCards(filteredPhones);
         });
     </script>
 </body>
+</html>
